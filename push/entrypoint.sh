@@ -21,7 +21,7 @@ docker push $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
 
 if [ $INPUT_LATEST = true ]; then
-  docker tag $INPUT_IMAGE:$INPUT_TAG $INPUT_IMAGE:latest
+  docker tag $INPUT_IMAGE:$INPUT_TAG $INPUT_REGISTRY/$INPUT_IMAGE:latest
   docker push $INPUT_REGISTRY/$INPUT_IMAGE:latest
 fi
 
