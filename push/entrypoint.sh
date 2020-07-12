@@ -16,12 +16,10 @@ else
   echo "INPUT_GCLOUD_KEY was empty, not performing auth" 1>&2
 fi
 
-docker tag $INPUT_IMAGE:$INPUT_TAG $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 docker push $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
 
 if [ $INPUT_LATEST = true ]; then
-  docker tag $INPUT_IMAGE:$INPUT_TAG $INPUT_REGISTRY/$INPUT_IMAGE:latest
   docker push $INPUT_REGISTRY/$INPUT_IMAGE:latest
 fi
 
