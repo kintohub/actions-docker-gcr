@@ -89,3 +89,12 @@ jobs:
 | tag        | The tag of the image.                                                            | false    | `$GITHUB_SHA`        |
 | latest     | If true, will also add latest tag                                                | true     | `true`               |
 | gcloud_key | A GCloud service account json key, base64 encoded. Should be stored in a secret! | true     |
+
+### Pull
+
+| parameter  | description                                                                      | required | default              |
+| ---------- | -------------------------------------------------------------------------------- | -------- | -------------------- |
+| registry   | The registry to get the image from                                               | false    | gcr.io               |
+| image      | The name of image to download.                                                   | false    | `$GITHUB_REPOSITORY` |
+| tag        | The tag of the image.                                                            | false    | `$GITHUB_SHA`        |
+| gcloud_key | A GCloud service account json key, base64 encoded. Should be stored in a secret! | true     |
