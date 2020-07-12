@@ -6,6 +6,9 @@ branding:
   color: blue
 inputs:
   registry:      
+    description: The registry of the existing image. Defaults to gcr.io
+    required: false
+  new_registry:
     description: The registry to upload to. Defaults to gcr.io
     required: false
   image:
