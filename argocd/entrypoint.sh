@@ -7,4 +7,4 @@ argocd app actions run \
   --kind $INPUT_KIND \
   --namespace $INPUT_NAMESPACE \
   --resource-name $INPUT_NAME \
-  kinto-frontend restart
+  $INPUT_APP $INPUT_ACTION
