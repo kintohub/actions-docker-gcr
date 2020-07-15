@@ -21,6 +21,10 @@ inputs:
     description: If true, will also add latest tag
     required: true
     default: "true"
+  working_directory:
+    description: Docker context.
+    required: true
+    default: "."
 
 runs: 
   using: 'docker'

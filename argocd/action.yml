@@ -1,0 +1,31 @@
+name: actions-docker-gcr/argocd
+description: Restart a deployment in an argocd app
+author: bappr
+branding:
+  icon: anchor
+  color: blue
+inputs:
+  server:      
+    description: Argocd grpc server
+    required: true
+  app:
+    description: Argocd application name
+    required: true
+  action:
+    description: Argocd action name (argocd app actions run _)
+    required: true
+    default: restart
+  kind:
+    description: Resource kind
+    required: true
+    default: Deployment
+  namespace:
+    description: Resource namespace
+    required: true
+  name:
+    description: Resource name
+    required: true
+
+runs: 
+  using: 'docker'
+  image: 'Dockerfile'
