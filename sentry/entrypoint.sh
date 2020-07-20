@@ -27,6 +27,7 @@ echo $SENTRY_PROJECT
 echo $SENTRY_AUTH_TOKEN
 docker run --entrypoint '/bin/sh' $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG -c '
 yarn global add @sentry/cli
+echo INPUT_TAG="$INPUT_TAG" 
 sentry-cli releases list
 sentry-cli releases new "$INPUT_TAG" 
 sentry-cli releases finalize "$INPUT_TAG"
