@@ -22,14 +22,13 @@ export SENTRY_ORG=$INPUT_SENTRY_ORG
 export SENTRY_PROJECT=$INPUT_SENTRY_PROJECT
 export SENTRY_AUTH_TOKEN=$INPUT_SENTRY_TOKEN
 
-echo $SENTRY_ORG
-echo $SENTRY_PROJECT
-echo $SENTRY_AUTH_TOKEN
+echo "Running sentry script"
+
 docker run --entrypoint '/bin/sh' $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG -c '
 yarn global add @sentry/cli
-echo INPUT_TAG="$INPUT_TAG" 
+echo INPUT_TAG='$INPUT_TAG'
 sentry-cli releases list
-sentry-cli releases new "$INPUT_TAG" 
-sentry-cli releases finalize "$INPUT_TAG"
-sentry-cli releases files "$INPUT_TAG" upload-sourcemaps $BUILD_DIR/static/js/ --rewrite --url-prefix '~/static/js'
+sentry-cli releases new '$INPUT_TAG'
+sentry-cli releases finalize '$INPUT_TAG'
+sentry-cli releases files '$INPUT_TAG' upload-sourcemaps $BUILD_DIR/static/js/ --rewrite --url-prefix "~/static/js"
 '
