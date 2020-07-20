@@ -20,13 +20,14 @@ docker pull $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
 echo "Running sentry script"
 
+# use the GITHUB_SHA as the version as we need to have that on FE as well
 docker run --entrypoint '/bin/sh' $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG -c '
 yarn global add @sentry/cli
 export SENTRY_ORG='$INPUT_SENTRY_ORG'
 export SENTRY_PROJECT='$INPUT_SENTRY_PROJECT'
 export SENTRY_AUTH_TOKEN='$INPUT_SENTRY_TOKEN'
 sentry-cli releases list
-sentry-cli releases new '$INPUT_TAG'
-sentry-cli releases finalize '$INPUT_TAG'
-sentry-cli releases files '$INPUT_TAG' upload-sourcemaps static/js/ --rewrite --url-prefix "~/static/js"
+sentry-cli releases new '$GITHUB_SHA'
+sentry-cli releases finalize '$GITHUB_SHA'
+sentry-cli releases files '$GITHUB_SHA' upload-sourcemaps static/js/ --rewrite --url-prefix "~/static/js"
 '
