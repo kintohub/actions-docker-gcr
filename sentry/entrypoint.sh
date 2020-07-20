@@ -18,15 +18,15 @@ fi
 echo "Pulling $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG"
 docker pull $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
-export SENTRY_ORG=$INPUT_SENTRY_ORG
-export SENTRY_PROJECT=$INPUT_SENTRY_PROJECT
-export SENTRY_AUTH_TOKEN=$INPUT_SENTRY_TOKEN
+
 
 echo "Running sentry script"
 
 docker run --entrypoint '/bin/sh' $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG -c '
 yarn global add @sentry/cli
-echo INPUT_TAG='$INPUT_TAG'
+export SENTRY_ORG='$INPUT_SENTRY_ORG'
+export SENTRY_PROJECT='$INPUT_SENTRY_PROJECT'
+export SENTRY_AUTH_TOKEN='$INPUT_SENTRY_TOKEN'
 sentry-cli releases list
 sentry-cli releases new '$INPUT_TAG'
 sentry-cli releases finalize '$INPUT_TAG'
