@@ -18,8 +18,16 @@ fi
 echo "Pulling $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG"
 docker pull $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
-if [ -n "${INPUT_NEW_TAG}" ]; then
-  echo "Tagging $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG to $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_NEW_TAG"
-  docker tag $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_NEW_TAG
-fi
+docker run images $INPUT_REGISTRY/$INPUT_IMAGE:$INPUT_TAG
 
+export SENTRY_ORG=$INPUT_SENTRY_ORG
+export SENTRY_PROJECT=$INPUT_SENTRY_PROJECT
+export SENTRY_AUTH_TOKEN=$INPUT_SENTRY_TOKEN
+
+docker run --entrypoint '/bin/sh' asia.gcr.io/kinto-tools/kinto-frontend:v1.0.6 -c '
+yarn global add @sentry/cli
+sentry-cli releases list
+sentry-cli releases new "$INPUT_TAG" 
+sentry-cli releases finalize "$INPUT_TAG"
+sentry-cli releases files "$INPUT_TAG" upload-sourcemaps $BUILD_DIR/static/js/ --rewrite --url-prefix '~/static/js'
+'
